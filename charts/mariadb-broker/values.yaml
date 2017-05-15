@@ -1,0 +1,20 @@
+# Default values for mariadb-broker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: prydonius/mariadb-broker
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  name: mariadb-broker
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 8005
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

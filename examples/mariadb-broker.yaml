@@ -1,0 +1,6 @@
+apiVersion: servicecatalog.k8s.io/v1alpha1
+kind: Broker
+metadata:
+  name: mariadb-broker
+spec:
+  url: http://mariadb-broker-mariadb-broker.mariadb-broker.svc.cluster.local
