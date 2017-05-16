@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: prydonius/mariadb-broker
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 service:
   name: mariadb-broker
   type: ClusterIP
