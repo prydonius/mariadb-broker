@@ -10,10 +10,11 @@ import (
 )
 
 const (
-	TILLER_HOST = "tiller-deploy.kube-system.svc.cluster.local:44134"
-	CHART_PATH  = "/mariadb-0.6.1.tgz"
+	tillerHost = "tiller-deploy.kube-system.svc.cluster.local:44134"
+	chartPath  = "/mariadb-0.6.1.tgz"
 )
 
+// Install creates a new MariaDB chart release
 func Install(releaseName, namespace string) error {
 	vals, err := yaml.Marshal(map[string]interface{}{
 		"mariadbRootPassword": uniuri.New(),
@@ -22,22 +23,24 @@ func Install(releaseName, namespace string) error {
 	if err != nil {
 		return err
 	}
-	helmClient := helm.NewClient(helm.Host(TILLER_HOST))
-	_, err = helmClient.InstallRelease(CHART_PATH, namespace, helm.ReleaseName(releaseName), helm.ValueOverrides(vals))
+	helmClient := helm.NewClient(helm.Host(tillerHost))
+	_, err = helmClient.InstallRelease(chartPath, namespace, helm.ReleaseName(releaseName), helm.ValueOverrides(vals))
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
+// Delete deletes a MariaDB chart release
 func Delete(releaseName string) error {
-	helmClient := helm.NewClient(helm.Host(TILLER_HOST))
+	helmClient := helm.NewClient(helm.Host(tillerHost))
 	if _, err := helmClient.DeleteRelease(releaseName); err != nil {
 		return err
 	}
 	return nil
 }
 
+// GetPassword returns the MariaDB password for a chart release
 func GetPassword(releaseName, namespace string) (string, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {

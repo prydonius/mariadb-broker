@@ -48,7 +48,7 @@ func (c *mariadbController) Catalog() (*brokerapi.Catalog, error) {
 }
 
 func (c *mariadbController) CreateServiceInstance(id string, req *brokerapi.CreateServiceInstanceRequest) (*brokerapi.CreateServiceInstanceResponse, error) {
-	if err := client.Install(id, id); err != nil {
+	if err := client.Install(releaseName(id), id); err != nil {
 		return nil, err
 	}
 	glog.Infof("Created MariaDB Service Instance:\n%v\n", id)
@@ -60,18 +60,18 @@ func (c *mariadbController) GetServiceInstance(id string) (string, error) {
 }
 
 func (c *mariadbController) RemoveServiceInstance(id string) (*brokerapi.DeleteServiceInstanceResponse, error) {
-	if err := client.Delete(id); err != nil {
+	if err := client.Delete(releaseName(id)); err != nil {
 		return nil, err
 	}
 	return &brokerapi.DeleteServiceInstanceResponse{}, nil
 }
 
 func (c *mariadbController) Bind(instanceID, bindingID string, req *brokerapi.BindingRequest) (*brokerapi.CreateServiceBindingResponse, error) {
-	host := instanceID + "-mariadb." + instanceID + ".svc.cluster.local"
+	host := releaseName(instanceID) + "-mariadb." + instanceID + ".svc.cluster.local"
 	port := "3306"
 	database := "dbname"
 	username := "root"
-	password, err := client.GetPassword(instanceID, instanceID)
+	password, err := client.GetPassword(releaseName(instanceID), instanceID)
 	if err != nil {
 		return nil, err
 	}
@@ -90,4 +90,8 @@ func (c *mariadbController) Bind(instanceID, bindingID string, req *brokerapi.Bi
 func (c *mariadbController) UnBind(instanceID string, bindingID string) error {
 	// Since we don't persist the binding, there's nothing to do here.
 	return nil
+}
+
+func releaseName(id string) string {
+	return "i-" + id
 }
