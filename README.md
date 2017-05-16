@@ -6,6 +6,8 @@ instances of [MariaDB](https://kubeapps.com/charts/stable/mariadb). This is a
 Broker](https://github.com/kubernetes-incubator/service-catalog), and should not
 be used in production.
 
+[Learn more about the Kubernetes Service Catalog](https://medium.com/@prydonius/service-catalog-in-kubernetes-78c0736e3910)
+
 ## Prerequisites
 
 1. Kubernetes cluster ([minikube](https://github.com/kubernetes/minikube))
