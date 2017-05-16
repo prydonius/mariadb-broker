@@ -3,7 +3,7 @@
 This is an implementation of a Service Broker that uses Helm to provision
 instances of [MariaDB](https://kubeapps.com/charts/stable/mariadb). This is a
 **proof-of-concept** for the [Kubernetes Service
-Broker](https://github.com/kubernetes-incubator/service-catalog), and should not
+Catalog](https://github.com/kubernetes-incubator/service-catalog), and should not
 be used in production.
 
 [Learn more about the Kubernetes Service Catalog](https://medium.com/@prydonius/service-catalog-in-kubernetes-78c0736e3910)
